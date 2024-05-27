@@ -1,0 +1,15 @@
+.footer {
+  background: var(--light-blue);
+  color: white;
+  text-align: center;
+  padding: 1em;
+}
+
+.social-media {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+.social-media a:hover {
+    color:darkmagenta;
+}

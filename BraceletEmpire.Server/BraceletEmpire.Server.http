@@ -1,0 +1,6 @@
+@BraceletEmpire.Server_HostAddress = http://localhost:5117
+
+GET {{BraceletEmpire.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

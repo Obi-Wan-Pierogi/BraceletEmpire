@@ -1,0 +1,22 @@
+.featured-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  justify-content: center;
+  padding: 10px; /* Adjust as needed */
+  box-sizing: border-box;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.app-card {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .featured-container {
+    width: 100%; /* Full width for smaller screens */
+    grid-template-columns: repeat(1, 1fr); /* Optional: switch to a single column layout on smaller screens */
+  }
+}

@@ -1,0 +1,15 @@
+.cards-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  padding: 10px; /* Adjust as needed */
+  box-sizing: border-box;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.app-card {
+  box-sizing: border-box;
+  max-width: 100%;
+}

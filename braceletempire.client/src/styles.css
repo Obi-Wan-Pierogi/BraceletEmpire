@@ -1,0 +1,18 @@
+/* define primary, secondary, accent, and light-gray colors*/
+
+:root {
+  --primary-color: #FF90BC; /* Darker Pink*/
+  --secondary-color: #FFC0D9; /* Pastel Pink*/
+  --accent-color: #F9F9E0; /* Cream */
+  --light-blue: #8ACDD7; /* Light blue */
+}
+
+body {
+  /*background-color: var(--light-blue);*/
+  color: #333;
+}
+
+a, .btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}

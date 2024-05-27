@@ -1,0 +1,19 @@
+<div class="card">
+  <img [src]="item.imageUrl" class="card-img" alt="Card image" />
+  <div class="card-body">
+    <h5 class="card-name">{{ item.itemName }}</h5>
+    <p class="card-text">{{ item.itemDescription }}</p>
+    <!-- Type-specific properties -->
+    <div *ngIf="braceletSpecificAttribute">
+      <p class="card-specific-attribute">Bracelet Material: {{ braceletSpecificAttribute }}</p>
+    </div>
+    <div *ngIf="keychainSpecificAttribute">
+      <p class="card-specific-attribute">Keychain Material: {{ keychainSpecificAttribute }}</p>
+    </div>
+    <h5 class="card-price">{{ item.itemPrice | currency }}</h5>
+
+
+
+    <button (click)="addToCart()">Add to Cart</button>
+  </div>
+</div>

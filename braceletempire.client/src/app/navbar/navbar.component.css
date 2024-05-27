@@ -1,0 +1,36 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 0px 5px 0px;
+  width: 100%;
+  box-sizing:border-box;
+  font-family: Cambria, Arial, Calibri;
+  font-size: 18px;
+  /*background-color:lightgray;*/
+}
+
+.nav-item a:hover {
+  color: darkmagenta;  
+}
+
+.nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.nav-item {
+  margin-left: 10px;
+}
+
+.navbar-brand, .nav-link {
+  /*  font-weight: bold;*/
+  text-decoration: none;
+  color: #F9F9E0;
+  border: #FF90BC;
+  background-color: #FF90BC;
+  border-radius: 5px;
+  padding: 0px 2px 0px 2px;
+}
