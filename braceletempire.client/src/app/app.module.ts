@@ -15,7 +15,8 @@ import { CommonModule } from '@angular/common';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms'; // Import ReactiveFormsModule
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'; // Import Rea
     CardListComponent,
     CartComponent,
     CheckoutComponent,
-    ConfirmationComponent // Declare the ConfirmationComponent
+    ConfirmationComponent,
+    NotificationComponent // Declare the ConfirmationComponent
   ],
   imports: [
     BrowserModule,

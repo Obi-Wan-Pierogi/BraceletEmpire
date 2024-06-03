@@ -24,8 +24,9 @@ export class CartService {
     const currentItems = this.cartItemsSubject.value;
     const existingItem = currentItems.find(i => i.itemId === item.itemId);
     if (existingItem) {
-      existingItem.quantity += item.quantity;
+      existingItem.quantity += 1;  // Increment quantity by 1
     } else {
+      item.quantity = item.quantity || 1;  // Set default quantity to 1 if not provided
       currentItems.push(item);
     }
     this.cartItemsSubject.next([...currentItems]);
@@ -54,4 +55,7 @@ export class CartService {
     this.cartItemsSubject.next(currentItems);
   }
 
+  updateCartItems(items: Item[]): void {
+    this.cartItemsSubject.next(items);
+  }
 }

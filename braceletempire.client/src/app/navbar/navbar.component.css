@@ -2,16 +2,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 0px 5px 0px;
+  padding: 0 0 5px 0;
   width: 100%;
-  box-sizing:border-box;
-  font-family: Cambria, Arial, Calibri;
+  box-sizing: border-box;
+  font-family: Arial, Calibri;
   font-size: 18px;
-  /*background-color:lightgray;*/
+  /* background-color: lightgray; */
 }
 
 .nav-item a:hover {
-  color: darkmagenta;  
+  color: darkmagenta;
 }
 
 .nav {
@@ -26,11 +26,21 @@
 }
 
 .navbar-brand, .nav-link {
-  /*  font-weight: bold;*/
   text-decoration: none;
-  color: #F9F9E0;
-  border: #FF90BC;
-  background-color: #FF90BC;
+  color: #f9f9e0;
+  border: #ff90bc;
+  background-color: #ff90bc;
   border-radius: 5px;
-  padding: 0px 2px 0px 2px;
+  padding: 0 2px;
+}
+
+.cart-counter {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 8px;
+  margin-left: 5px;
+  font-size: 12px;
+  display: inline-block;
+  vertical-align: top;
 }

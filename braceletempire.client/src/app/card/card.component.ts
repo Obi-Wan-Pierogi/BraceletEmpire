@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Item } from '../interfaces/item';
 import { Bracelet } from '../interfaces/bracelet';
 import { Keychain } from '../interfaces/keychain';
 import { CartService } from '../services/cart.service';
 import { isBracelet, isKeychain } from '../type-guards';
+import { NotificationComponent } from '../notification/notification.component'; 
 
 @Component({
   selector: 'app-card',
@@ -12,6 +13,7 @@ import { isBracelet, isKeychain } from '../type-guards';
 })
 export class CardComponent implements OnInit {
   @Input() item!: Item;
+  @ViewChild('notification') notification!: NotificationComponent;
   braceletSpecificAttribute?: string;
   keychainSpecificAttribute?: string;
 
@@ -30,7 +32,11 @@ export class CardComponent implements OnInit {
   }
 
   addToCart() {
+    if (!this.item.quantity) {
+      this.item.quantity = 1;
+    }
     this.cartService.addToCart(this.item);
+    this.notification.show('Item added to cart', 'top-center');
   }
 
   isBracelet(item: Item): item is Bracelet {

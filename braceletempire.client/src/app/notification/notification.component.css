@@ -1,0 +1,43 @@
+.notification {
+  position: fixed;
+  background-color: #8ACDD7;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: auto;
+  max-width: 300px; /* Adjust max-width as needed */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 1; /* Ensure the notification is visible */
+  transition: opacity 0.5s ease-in-out; /* Smooth transition for visibility */
+}
+
+
+.notification.top-right {
+  top: 25px;
+  right: 15px;
+}
+
+.notification.top-center{
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.notification.top-left {
+  top: 20px;
+  left: 20px;
+}
+
+.notification.bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.notification.bottom-left {
+  bottom: 20px;
+  left: 20px;
+}

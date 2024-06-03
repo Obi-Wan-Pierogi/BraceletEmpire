@@ -75,7 +75,7 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "browserTarget": "braceletempire.client:build",
+            "buildTarget": "braceletempire.client:build",
             "proxyConfig": "src/proxy.conf.js"
           }
         },
@@ -98,6 +98,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": [],
