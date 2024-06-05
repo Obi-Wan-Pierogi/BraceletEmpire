@@ -1,12 +1,13 @@
 .featured-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 25px;
   justify-content: center;
   padding: 10px; /* Adjust as needed */
   box-sizing: border-box;
   width: 90%;
   margin: 0 auto;
+
 }
 
 .app-card {
@@ -14,9 +15,22 @@
   max-width: 100%;
 }
 
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .featured-container {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust columns based on available space */
+  }
+}
+
 @media (max-width: 768px) {
   .featured-container {
     width: 100%; /* Full width for smaller screens */
-    grid-template-columns: repeat(1, 1fr); /* Optional: switch to a single column layout on smaller screens */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust columns based on available space */
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust columns based on available space */
   }
 }

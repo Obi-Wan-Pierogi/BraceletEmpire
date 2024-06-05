@@ -18,9 +18,6 @@ export class ItemService {
   }
 
   private loadItems(): void {
-    //this.http.get<Item[]>(this.itemsUrl).subscribe(items => {
-    //  this.itemsSubject.next(items);
-    //});
     this.http.get<Item[]>(this.itemsUrl).pipe(
       map(items => items.map(item => ({
         ...item,

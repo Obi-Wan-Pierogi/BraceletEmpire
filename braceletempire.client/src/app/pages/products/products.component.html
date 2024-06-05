@@ -1,1 +1,17 @@
-<p>products works!</p>
+<div class="products-container">
+  <h2>Bracelets</h2>
+  <div class="category-container" *ngIf="bracelets.length > 0; else noBracelets">
+    <div *ngFor="let item of bracelets" class="app-card">
+      <app-card [item]="item"></app-card>
+    </div>
+  </div>
+  <ng-template #noBracelets><p>No Bracelets available.</p></ng-template>
+
+  <h2>Keychains</h2>
+  <div class="category-container" *ngIf="keychains.length > 0; else noKeychains">
+    <div *ngFor="let item of keychains" class="app-card">
+      <app-card [item]="item"></app-card>
+    </div>
+  </div>
+  <ng-template #noKeychains><p>No Keychains available.</p></ng-template>
+</div>

@@ -14,7 +14,7 @@ export class FeaturedComponent implements OnInit {
 
   ngOnInit(): void {
     this.itemService.getAllItems().subscribe(items => {
-      this.featuredItems = this.selectRandomItems(items, 3);
+      this.featuredItems = this.selectRandomItems(items, 4);
     });
   }
 

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ItemService } from '../services/item.service';
 import { CreateItemDto } from '../interfaces/create-item-dto';
+import { NotificationComponent } from '../notification/notification.component'; 
 
 @Component({
   selector: 'app-admin',
@@ -8,6 +9,7 @@ import { CreateItemDto } from '../interfaces/create-item-dto';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent {
+  @ViewChild(NotificationComponent) notification: NotificationComponent | undefined;
   itemDto: CreateItemDto = {
     itemName: '',
     itemDescription: '',
@@ -29,9 +31,24 @@ export class AdminComponent {
   onSubmit(): void {
     if (this.selectedFile) {
       this.itemService.createItem(this.itemDto, this.selectedFile).subscribe(response => {
-        console.log('Item created successfully', response);
-        // Reset form or provide feedback to the user
+        if (this.notification) {
+          console.log('Item created successfully', response);
+          this.notification.show('Item added to database', 'top-center');
+        }
+        this.resetForm();
       });
     }
+  }
+
+  resetForm(): void {
+    this.itemDto = {
+      itemName: '',
+      itemDescription: '',
+      itemPrice: 0,
+      itemType: '',
+      braceletSpecificAttribute: '',
+      keychainSpecificAttribute: ''
+    };
+    this.selectedFile = null;
   }
 }

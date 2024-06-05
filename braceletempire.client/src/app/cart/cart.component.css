@@ -3,6 +3,7 @@
   padding: 16px;
   max-width: 600px; /* Adjusted for a wider layout */
   margin: 0 auto;
+  margin-top:20px;
 }
 
 .cart-item {
