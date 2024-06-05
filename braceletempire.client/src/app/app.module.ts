@@ -17,6 +17,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NotificationComponent } from './notification/notification.component';
+import { AdminComponent } from './admin/admin.component';
+
+
 
 @NgModule({
   declarations: [
@@ -32,7 +35,9 @@ import { NotificationComponent } from './notification/notification.component';
     CartComponent,
     CheckoutComponent,
     ConfirmationComponent,
-    NotificationComponent // Declare the ConfirmationComponent
+    NotificationComponent,
+    AdminComponent,
+    
   ],
   imports: [
     BrowserModule,

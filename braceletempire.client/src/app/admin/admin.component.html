@@ -1,0 +1,36 @@
+<div class="admin-form">
+  <form (ngSubmit)="onSubmit()" #itemForm="ngForm">
+    <div>
+      <label for="itemName">Item Name:</label>
+      <input type="text" id="itemName" required [(ngModel)]="itemDto.itemName" name="itemName">
+    </div>
+    <div>
+      <label for="itemDescription">Description:</label>
+      <input type="text" id="itemDescription" required [(ngModel)]="itemDto.itemDescription" name="itemDescription">
+    </div>
+    <div>
+      <label for="itemPrice">Price:</label>
+      <input type="number" id="itemPrice" required [(ngModel)]="itemDto.itemPrice" name="itemPrice">
+    </div>
+    <div>
+      <label for="itemType">Type:</label>
+      <select id="itemType" required [(ngModel)]="itemDto.itemType" name="itemType">
+        <option value="Bracelet">Bracelet</option>
+        <option value="Keychain">Keychain</option>
+      </select>
+    </div>
+    <div *ngIf="itemDto.itemType === 'Bracelet'">
+      <label for="braceletSpecificAttribute">Bracelet Specific Attribute:</label>
+      <input type="text" id="braceletSpecificAttribute" [(ngModel)]="itemDto.braceletSpecificAttribute" name="braceletSpecificAttribute">
+    </div>
+    <div *ngIf="itemDto.itemType === 'Keychain'">
+      <label for="keychainSpecificAttribute">Keychain Specific Attribute:</label>
+      <input type="text" id="keychainSpecificAttribute" [(ngModel)]="itemDto.keychainSpecificAttribute" name="keychainSpecificAttribute">
+    </div>
+    <div>
+      <label for="image">Image:</label>
+      <input type="file" id="image" (change)="onFileChange($event)">
+    </div>
+    <button type="submit">Add Item</button>
+  </form>
+</div>

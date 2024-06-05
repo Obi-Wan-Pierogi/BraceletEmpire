@@ -1,14 +1,12 @@
-﻿namespace BraceletEmpire.Server.Models
+﻿namespace BraceletEmpire.Server.DTOs
 {
-    public class Item
+    public class CreateItemDto
     {
-        public int ItemId { get; set; }
         public string ItemName { get; set; } = default!;
         public string ItemDescription { get; set; } = default!;
-        public string ImageUrl { get; set; } = default!;
         public decimal ItemPrice { get; set; } = default!;
         public string ItemType { get; set; } = default!;
-        public int ?Quantity { get; set; } = default!;
-
+        public string? BraceletSpecificAttribute { get; set; }
+        public string? KeychainSpecificAttribute { get; set; }
     }
 }

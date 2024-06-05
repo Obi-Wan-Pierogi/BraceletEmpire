@@ -38,7 +38,7 @@
 }
 
 .card button {
-  background-color: #F2A183;
+  background-color: #51B5C4;
   color: black;
   border: none;
   padding: 10px;
@@ -46,7 +46,7 @@
   cursor: pointer;
   border-radius: 5px;
   width: 65%;
-  align-self:center;
+  align-self: center;
 }
 
 .card-name, .card-price {

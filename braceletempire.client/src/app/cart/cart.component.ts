@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { Item } from '../interfaces/item';
+import {ItemService} from '../services/item.service';
+
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +14,7 @@ export class CartComponent implements OnInit {
   modifiedCartItems: Item[] = [];  // Separate array to track modifications
   displayedTotal: number = 0;  // Displayed total
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private itemService: ItemService) { }
 
   ngOnInit(): void {
     this.loadCartItems();
@@ -57,5 +59,9 @@ export class CartComponent implements OnInit {
     this.cartItems = this.modifiedCartItems.map(item => ({ ...item }));  // Copy modified items back to cartItems
     this.displayedTotal = this.getTotal(this.cartItems);  // Update displayed total
     this.cartService.updateCartItems(this.cartItems);  // Save changes to the service
+  }
+  
+  getImageUrl(imageUrl: string): string {
+    return this.itemService.getImageUrl(imageUrl);
   }
 }

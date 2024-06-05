@@ -5,6 +5,7 @@ import { Keychain } from '../interfaces/keychain';
 import { CartService } from '../services/cart.service';
 import { isBracelet, isKeychain } from '../type-guards';
 import { NotificationComponent } from '../notification/notification.component'; 
+import { ItemService } from '../services/item.service';
 
 @Component({
   selector: 'app-card',
@@ -17,7 +18,7 @@ export class CardComponent implements OnInit {
   braceletSpecificAttribute?: string;
   keychainSpecificAttribute?: string;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private itemService: ItemService) { }
 
   ngOnInit(): void {
     console.log('Item received in CardComponent:', this.item);
@@ -30,7 +31,7 @@ export class CardComponent implements OnInit {
       console.log('Keychain specific attribute:', this.keychainSpecificAttribute);
     }
   }
-
+  
   addToCart() {
     if (!this.item.quantity) {
       this.item.quantity = 1;
