@@ -1,4 +1,21 @@
 <div class="confirmation-container">
   <h2>Order Confirmation</h2>
-  <p>Your order has been placed successfully!</p>
+  <p>Your order has been placed successfully. Here are the details:</p>
+
+  <div *ngIf="order">
+    <p><strong>Order ID:</strong> {{ order.orderId }}</p>
+    <p><strong>Name:</strong> {{ order.name }}</p>
+    <p><strong>Email:</strong> {{ order.email }}</p>
+    <p><strong>Phone:</strong> {{ order.phone }}</p>
+    <p><strong>Address:</strong> {{ order.streetAddress }}, {{ order.city }}, {{ order.state }}, {{ order.zip }}</p>
+    <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
+
+    <h3>Items</h3>
+    <ul>
+      <li *ngFor="let item of order.items">
+        {{ item.itemName }} - ${{ item.itemPrice }} x {{ item.quantity }}
+      </li>
+    </ul>
+    <p><strong>Total:</strong> ${{ getTotal(order.items) }}</p>
+  </div>
 </div>

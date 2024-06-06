@@ -4,6 +4,7 @@ using BraceletEmpire.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BraceletEmpire.Server.Migrations
 {
     [DbContext(typeof(BraceletEmpireServerContext))]
-    partial class BraceletEmpireServerContextModelSnapshot : ModelSnapshot
+    [Migration("20240606042433_AddOrdersTable")]
+    partial class AddOrdersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,7 +56,7 @@ namespace BraceletEmpire.Server.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("ItemId");
@@ -135,11 +138,9 @@ namespace BraceletEmpire.Server.Migrations
 
             modelBuilder.Entity("BraceletEmpire.Server.Models.Item", b =>
                 {
-                    b.HasOne("BraceletEmpire.Server.Models.Order", "Order")
+                    b.HasOne("BraceletEmpire.Server.Models.Order", null)
                         .WithMany("Items")
                         .HasForeignKey("OrderId");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("BraceletEmpire.Server.Models.Order", b =>

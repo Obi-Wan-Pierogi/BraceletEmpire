@@ -1,24 +1,3 @@
-<!--<div class="checkout-container">
-  <h2>Checkout</h2>
-  <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input id="name" formControlName="name" type="text">
-      <div *ngIf="checkoutForm.get('name').invalid && (checkoutForm.get('name').dirty || checkoutForm.get('name').touched)">
-        <small class="error">Name is required</small>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="address">Address</label>
-      <input id="address" formControlName="address" type="text">
-      <div *ngIf="checkoutForm.get('address').invalid && (checkoutForm.get('address').dirty || checkoutForm.get('address').touched)">
-        <small class="error">Address is required</small>
-      </div>
-    </div>
-    <button type="submit" [disabled]="checkoutForm.invalid">Place Order</button>
-  </form>
-</div>-->
-
 <div class="checkout-container">
   <h2>Checkout</h2>
   <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
@@ -29,13 +8,74 @@
         <small class="error">Name is required</small>
       </div>
     </div>
+
     <div class="form-group">
-      <label for="address">Address</label>
-      <input id="address" formControlName="address" type="text">
-      <div *ngIf="checkoutForm.get('address')!.invalid && (checkoutForm.get('address')!.dirty || checkoutForm.get('address')!.touched)">
-        <small class="error">Address is required</small>
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email">
+      <div *ngIf="checkoutForm.get('email')!.invalid && (checkoutForm.get('email')!.dirty || checkoutForm.get('email')!.touched)">
+        <small class="error">Valid email is required</small>
       </div>
     </div>
+
+    <div class="form-group">
+      <label for="phone">Phone (optional)</label>
+      <input id="phone" formControlName="phone" type="tel">
+    </div>
+
+    <div class="form-group">
+      <label for="street">Street Address</label>
+      <input id="street" formControlName="street" type="text">
+      <div *ngIf="checkoutForm.get('street')!.invalid && (checkoutForm.get('street')!.dirty || checkoutForm.get('street')!.touched)">
+        <small class="error">Street address is required</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="city">City</label>
+      <input id="city" formControlName="city" type="text">
+      <div *ngIf="checkoutForm.get('city')!.invalid && (checkoutForm.get('city')!.dirty || checkoutForm.get('city')!.touched)">
+        <small class="error">City is required</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="state">State</label>
+      <input id="state" formControlName="state" type="text">
+      <div *ngIf="checkoutForm.get('state')!.invalid && (checkoutForm.get('state')!.dirty || checkoutForm.get('state')!.touched)">
+        <small class="error">State is required</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="zip">Zip Code</label>
+      <input id="zip" formControlName="zip" type="text">
+      <div *ngIf="checkoutForm.get('zip')!.invalid && (checkoutForm.get('zip')!.dirty || checkoutForm.get('zip')!.touched)">
+        <small class="error">Zip code is required</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="paymentMethod">Payment Method</label>
+      <select id="paymentMethod" formControlName="paymentMethod">
+        <option value="cashApp">CashApp</option>
+        <option value="paypal">PayPal</option>
+        <option value="bankTransfer">Bank Transfer</option>
+      </select>
+      <div *ngIf="checkoutForm.get('paymentMethod')!.invalid && (checkoutForm.get('paymentMethod')!.dirty || checkoutForm.get('paymentMethod')!.touched)">
+        <small class="error">Payment method is required</small>
+      </div>
+    </div>
+
     <button type="submit" [disabled]="checkoutForm.invalid">Place Order</button>
   </form>
+
+  <div class="order-summary">
+    <h3>Order Summary</h3>
+    <ul>
+      <li *ngFor="let item of cartItems">
+        {{ item.itemName }} - ${{ item.itemPrice }}
+      </li>
+    </ul>
+    <p>Total: ${{ total }}</p>
+  </div>
 </div>

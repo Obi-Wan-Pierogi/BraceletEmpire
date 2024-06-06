@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
 import { Item } from '../interfaces/item';
-import {ItemService} from '../services/item.service';
-
+import { ItemService } from '../services/item.service';
 
 @Component({
   selector: 'app-cart',
@@ -11,10 +11,10 @@ import {ItemService} from '../services/item.service';
 })
 export class CartComponent implements OnInit {
   cartItems: Item[] = [];
-  modifiedCartItems: Item[] = [];  // Separate array to track modifications
-  displayedTotal: number = 0;  // Displayed total
+  displayedTotal: number = 0;
+  quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  constructor(private cartService: CartService, private itemService: ItemService) { }
+  constructor(private cartService: CartService, private itemService: ItemService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadCartItems();
@@ -23,15 +23,14 @@ export class CartComponent implements OnInit {
   loadCartItems(): void {
     this.cartService.getCartItems().subscribe(items => {
       this.cartItems = items;
-      this.modifiedCartItems = items.map(item => ({ ...item }));  // Copy items to track modifications
-      this.displayedTotal = this.getTotal(items);  // Initialize displayed total
+      this.displayedTotal = this.getTotal(items);
     });
   }
 
   addToCart(item: Item): void {
-    item.quantity = item.quantity || 1;  // Ensure quantity is set to 1 if not provided
+    item.quantity = item.quantity || 1;
     this.cartService.addToCart(item);
-    this.displayedTotal = this.getTotal(this.cartItems);  // Update displayed total when item is added
+    this.displayedTotal = this.getTotal(this.cartItems);
   }
 
   removeFromCart(itemId: number): void {
@@ -45,9 +44,11 @@ export class CartComponent implements OnInit {
   }
 
   updateQuantity(itemId: number, quantity: number): void {
-    const item = this.modifiedCartItems.find(item => item.itemId === itemId);
+    const item = this.cartItems.find(item => item.itemId === itemId);
     if (item) {
       item.quantity = quantity;
+      this.cartService.updateItemQuantity(itemId, quantity);
+      this.displayedTotal = this.getTotal(this.cartItems);
     }
   }
 
@@ -55,13 +56,11 @@ export class CartComponent implements OnInit {
     return items.reduce((total, item) => total + item.itemPrice * item.quantity, 0);
   }
 
-  refreshCart(): void {
-    this.cartItems = this.modifiedCartItems.map(item => ({ ...item }));  // Copy modified items back to cartItems
-    this.displayedTotal = this.getTotal(this.cartItems);  // Update displayed total
-    this.cartService.updateCartItems(this.cartItems);  // Save changes to the service
-  }
-  
   getImageUrl(imageUrl: string): string {
     return this.itemService.getImageUrl(imageUrl);
+  }
+
+  navigateToCheckout(): void {
+    this.router.navigate(['/checkout']);
   }
 }

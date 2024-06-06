@@ -1,3 +1,34 @@
+<!--<div class="cart-container">
+  <h2>Shopping Cart</h2>
+  <div *ngIf="cartItems.length > 0; else emptyCart">
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <img [src]="item.imageUrl" alt="{{ item.itemName }}" class="cart-item-img">
+      <div class="cart-item-details">
+        <h3>{{ item.itemName }}</h3>
+        <p>{{ item.itemDescription }}</p>
+        <p>{{ item.itemPrice | currency }}</p>
+        <div class="quantity">
+          <label for="quantity-{{item.itemId}}">Quantity:</label>
+          <select id="quantity-{{item.itemId}}" [(ngModel)]="item.quantity" (change)="updateQuantity(item.itemId, item.quantity)">
+            <option *ngFor="let qty of quantities" [ngValue]="qty">{{ qty }}</option>
+          </select>
+        </div>
+        <button (click)="removeFromCart(item.itemId)">Remove</button>
+      </div>
+    </div>
+    <div class="cart-summary">
+      <p>Total: {{ displayedTotal | currency }}</p>
+      <div class="cart-buttons">
+        <button class="checkout-button" (click)="navigateToCheckout()">Checkout</button>
+      </div>
+    </div>
+    <button (click)="clearCart()">Clear Cart</button>
+  </div>
+  <ng-template #emptyCart>
+    <p>Your cart is empty.</p>
+  </ng-template>
+</div>-->
+
 <div class="cart-container">
   <h2>Shopping Cart</h2>
   <div *ngIf="cartItems.length > 0; else emptyCart">
@@ -8,17 +39,21 @@
         <p>{{ item.itemDescription }}</p>
         <p>{{ item.itemPrice | currency }}</p>
         <div class="quantity">
-          <label for="quantity">Quantity:</label>
-          <input id="quantity" type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item.itemId, item.quantity)" min="1">
+          <label for="quantity-{{item.itemId}}">Quantity:</label>
+          <select id="quantity-{{item.itemId}}" [(ngModel)]="item.quantity" (ngModelChange)="updateQuantity(item.itemId, item.quantity)">
+            <option *ngFor="let qty of quantities" [ngValue]="qty">{{ qty }}</option>
+          </select>
         </div>
         <button (click)="removeFromCart(item.itemId)">Remove</button>
       </div>
     </div>
-    <div class="cart-summary">
-      <p>Total: {{ displayedTotal | currency }}</p>
-      <button (click)="refreshCart()">Refresh Cart</button>
+    <div class="cart-summary-buttons">
+      <button (click)="clearCart()">Clear Cart</button>
+      <p class="total">Total: {{ displayedTotal | currency }}</p>
     </div>
-    <button (click)="clearCart()">Clear Cart</button>
+    <div class="checkout-container">
+      <button class="checkout-button" (click)="navigateToCheckout()">Checkout</button>
+    </div>
   </div>
   <ng-template #emptyCart>
     <p>Your cart is empty.</p>
