@@ -61,7 +61,6 @@ export class CheckoutComponent implements OnInit {
 
       this.orderService.createOrder(orderDetails).subscribe(orderId => {
         console.log('Order ID:', orderId);
-        // Clear the cart
         this.cartService.clearCart();
         // Navigate to the confirmation page with orderId
         this.router.navigate(['/confirmation'], { queryParams: { orderId } });

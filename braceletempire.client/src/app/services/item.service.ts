@@ -49,7 +49,7 @@ export class ItemService {
 
     formData.append('image', image);
 
-    /* return this.http.post<Item>(this.itemsUrl, formData);*/
+  
    return this.http.post<Item>(this.itemsUrl, formData).pipe(
       map(item => ({
         ...item,

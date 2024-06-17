@@ -73,7 +73,7 @@
     <h3>Order Summary</h3>
     <ul>
       <li *ngFor="let item of cartItems">
-        {{ item.itemName }} - ${{ item.itemPrice }}
+        {{ item.itemName }} x {{ item.quantity }} - ${{ item.itemPrice }}
       </li>
     </ul>
     <p>Total: ${{ total }}</p>

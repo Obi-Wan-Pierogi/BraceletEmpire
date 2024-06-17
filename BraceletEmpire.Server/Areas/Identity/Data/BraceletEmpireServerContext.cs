@@ -31,7 +31,7 @@ namespace BraceletEmpire.Server.Data
                 .HasMany(o => o.Items)
                 .WithOne(i => i.Order)
                 .HasForeignKey(i => i.OrderId)
-                .IsRequired(false); // Make the foreign key optional
+                .IsRequired(false);
 
             base.OnModelCreating(modelBuilder);
         }

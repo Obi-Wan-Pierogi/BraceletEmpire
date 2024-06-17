@@ -160,15 +160,6 @@ namespace BraceletEmpire.Server.Controllers
             return CreatedAtAction(nameof(GetItem), new { id = item.ItemId }, item);
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<Item>> PostItem(Item item)
-        //{
-        //    _context.Items.Add(item);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction(nameof(GetItem), new { id = item.ItemId }, item);
-        //}
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItem(int id)
         {

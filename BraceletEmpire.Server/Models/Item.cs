@@ -11,7 +11,7 @@
         public int Quantity { get; set; }
 
         // Foreign key to the related order
-        public int? OrderId { get; set; }  // Nullable OrderId
+        public int? OrderId { get; set; }
         public Order Order { get; set; }
     }
 }
