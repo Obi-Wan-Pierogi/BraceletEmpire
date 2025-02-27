@@ -3,7 +3,7 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 25px;
   justify-content: center;
-  padding: 10px; /* Adjust as needed */
+  padding: 10px; 
   box-sizing: border-box;
   width: 90%;
   margin: 0 auto;
@@ -18,19 +18,19 @@
 /* Responsive Design */
 @media (max-width: 1200px) {
   .featured-container {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust columns based on available space */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
   }
 }
 
 @media (max-width: 768px) {
   .featured-container {
-    width: 100%; /* Full width for smaller screens */
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust columns based on available space */
+    width: 100%; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
   }
 }
 
 @media (max-width: 480px) {
   .featured-container {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust columns based on available space */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
   }
 }

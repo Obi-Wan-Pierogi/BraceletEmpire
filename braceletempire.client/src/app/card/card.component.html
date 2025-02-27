@@ -1,19 +1,32 @@
-<div class="card">
-  <img [src]="item.imageUrl" class="card-img" alt="Card image" />
-  <div class="card-body">
-    <h5 class="card-name">{{ item.itemName }}</h5>
-    <p class="card-text">{{ item.itemDescription }}</p>
-    <!-- Type-specific properties -->
-    <div *ngIf="braceletSpecificAttribute">
-      <p class="card-specific-attribute">Bracelet Material: {{ braceletSpecificAttribute }}</p>
-    </div>
-    <div *ngIf="keychainSpecificAttribute">
-      <p class="card-specific-attribute">Keychain Material: {{ keychainSpecificAttribute }}</p>
-    </div>
-    <h5 class="card-price">{{ item.itemPrice | currency }}</h5>
-
-
-    <app-notification #notification position="top-center"></app-notification>
-    <button (click)="addToCart()">Add to Cart</button>
+<!-- braceletempire.client/src/app/card/card.component.html -->
+<div class="card" [ngClass]="{'fade-in': true}">
+  <div class="card-image-container">
+    <img [src]="item.imageUrl" class="card-img" alt="{{ item.itemName }}" loading="lazy" />
+    <div class="card-badge" *ngIf="isNewProduct(item)">New</div>
   </div>
+
+  <div class="card-body">
+    <h3 class="card-name">{{ item.itemName }}</h3>
+
+    <p class="card-text">{{ item.itemDescription }}</p>
+
+    <!-- Type-specific properties -->
+    <div *ngIf="braceletSpecificAttribute" class="card-attribute">
+      <span class="attribute-label">Material:</span> {{ braceletSpecificAttribute }}
+    </div>
+
+    <div *ngIf="keychainSpecificAttribute" class="card-attribute">
+      <span class="attribute-label">Material:</span> {{ keychainSpecificAttribute }}
+    </div>
+
+    <div class="card-footer">
+      <h4 class="card-price">{{ item.itemPrice | currency }}</h4>
+      <button class="add-to-cart-btn" (click)="addToCart()" [disabled]="isAddingToCart">
+        <span *ngIf="!isAddingToCart">Add to Cart</span>
+        <span *ngIf="isAddingToCart">Adding...</span>
+      </button>
+    </div>
+  </div>
+
+  <app-notification #notification></app-notification>
 </div>

@@ -1,3 +1,13 @@
-<div *ngIf="isVisible" class="notification" [ngClass]="position">
-  {{ message }}
+<!-- braceletempire.client/src/app/notification/notification.component.html -->
+<div *ngIf="isVisible"
+     class="notification"
+     [ngClass]="[position, type]"
+     (click)="hide()">
+  <div class="notification-content">
+    {{ message }}
+  </div>
+
+  <button class="notification-close" (click)="hide()">
+    ×
+  </button>
 </div>

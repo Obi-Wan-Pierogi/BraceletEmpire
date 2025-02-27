@@ -1,37 +1,207 @@
-<div class="admin-form">
-  <form (ngSubmit)="onSubmit()" #itemForm="ngForm">
-    <div>
-      <label for="itemName">Item Name:</label>
-      <input type="text" id="itemName" required [(ngModel)]="itemDto.itemName" name="itemName">
+<!-- braceletempire.client/src/app/admin/admin.component.html -->
+<div class="admin-panel">
+  <div class="admin-header">
+    <h1>Admin Dashboard</h1>
+    <p>Add and manage your products</p>
+  </div>
+
+  <div class="admin-content">
+    <div class="admin-tabs">
+      <button [ngClass]="{'active': activeTab === 'add'}"
+              (click)="setActiveTab('add')">
+        Add Product
+      </button>
+      <button [ngClass]="{'active': activeTab === 'manage'}"
+              (click)="setActiveTab('manage')">
+        Manage Products
+      </button>
     </div>
-    <div>
-      <label for="itemDescription">Description:</label>
-      <input type="text" id="itemDescription" required [(ngModel)]="itemDto.itemDescription" name="itemDescription">
+
+    <!-- Add Product Form -->
+    <div *ngIf="activeTab === 'add'" class="add-product-container">
+      <form (ngSubmit)="onSubmit()" #itemForm="ngForm" class="product-form">
+        <div class="form-section">
+          <h3>Product Information</h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="itemName">Product Name *</label>
+              <input type="text"
+                     id="itemName"
+                     [(ngModel)]="itemDto.itemName"
+                     name="itemName"
+                     required
+                     placeholder="Enter product name"
+                     [ngClass]="{'error-input': isFieldInvalid('itemName')}">
+              <div *ngIf="isFieldInvalid('itemName')" class="error-message">
+                Name is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="itemDescription">Description *</label>
+              <textarea id="itemDescription"
+                        [(ngModel)]="itemDto.itemDescription"
+                        name="itemDescription"
+                        required
+                        rows="4"
+                        placeholder="Enter product description"
+                        [ngClass]="{'error-input': isFieldInvalid('itemDescription')}"></textarea>
+              <div *ngIf="isFieldInvalid('itemDescription')" class="error-message">
+                Description is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="itemPrice">Price ($) *</label>
+              <input type="number"
+                     id="itemPrice"
+                     [(ngModel)]="itemDto.itemPrice"
+                     name="itemPrice"
+                     required
+                     min="0.01"
+                     step="0.01"
+                     placeholder="0.00"
+                     [ngClass]="{'error-input': isFieldInvalid('itemPrice')}">
+              <div *ngIf="isFieldInvalid('itemPrice')" class="error-message">
+                Price is required and must be greater than 0
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="itemType">Product Type *</label>
+              <select id="itemType"
+                      [(ngModel)]="itemDto.itemType"
+                      name="itemType"
+                      required
+                      [ngClass]="{'error-input': isFieldInvalid('itemType')}">
+                <option value="" disabled selected>Select product type</option>
+                <option value="Bracelet">Bracelet</option>
+                <option value="Keychain">Keychain</option>
+              </select>
+              <div *ngIf="isFieldInvalid('itemType')" class="error-message">
+                Product type is required
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="itemDto.itemType === 'Bracelet'" class="form-row">
+            <div class="form-group full-width">
+              <label for="braceletSpecificAttribute">Bracelet Material</label>
+              <input type="text"
+                     id="braceletSpecificAttribute"
+                     [(ngModel)]="itemDto.braceletSpecificAttribute"
+                     name="braceletSpecificAttribute"
+                     placeholder="e.g., Beads, Thread, etc.">
+            </div>
+          </div>
+
+          <div *ngIf="itemDto.itemType === 'Keychain'" class="form-row">
+            <div class="form-group full-width">
+              <label for="keychainSpecificAttribute">Keychain Material</label>
+              <input type="text"
+                     id="keychainSpecificAttribute"
+                     [(ngModel)]="itemDto.keychainSpecificAttribute"
+                     name="keychainSpecificAttribute"
+                     placeholder="e.g., Metal, Plastic, etc.">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Product Image</h3>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="image">Product Image *</label>
+              <div class="file-upload">
+                <input type="file"
+                       id="image"
+                       (change)="onFileChange($event)"
+                       accept="image/*"
+                       class="file-input"
+                       #fileInput>
+                <div class="file-preview" (click)="fileInput.click()">
+                  <div *ngIf="!imagePreview" class="upload-placeholder">
+                    <span class="upload-icon">+</span>
+                    <span>Click to upload image</span>
+                  </div>
+                  <img *ngIf="imagePreview" [src]="imagePreview" alt="Product preview">
+                </div>
+                <button type="button"
+                        class="browse-btn"
+                        (click)="fileInput.click()">
+                  Browse
+                </button>
+              </div>
+              <div *ngIf="isSubmitted && !selectedFile" class="error-message">
+                Product image is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" (click)="resetForm()" class="btn-secondary">Reset</button>
+          <button type="submit" class="btn-primary" [disabled]="isSubmitting">
+            <span *ngIf="!isSubmitting">Add Product</span>
+            <span *ngIf="isSubmitting">Adding...</span>
+          </button>
+        </div>
+      </form>
     </div>
-    <div>
-      <label for="itemPrice">Price:</label>
-      <input type="number" id="itemPrice" required [(ngModel)]="itemDto.itemPrice" name="itemPrice">
+
+    <!-- Manage Products Section -->
+    <div *ngIf="activeTab === 'manage'" class="manage-products-container">
+      <div *ngIf="isLoadingProducts" class="loading-container">
+        <div class="spinner"></div>
+        <p>Loading products...</p>
+      </div>
+
+      <div *ngIf="!isLoadingProducts && products.length === 0" class="empty-state">
+        <p>No products found.</p>
+        <button (click)="setActiveTab('add')" class="btn-primary">Add Your First Product</button>
+      </div>
+
+      <div *ngIf="!isLoadingProducts && products.length > 0" class="products-table-container">
+        <table class="products-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Type</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products">
+              <td class="product-image-cell">
+                <img [src]="product.imageUrl" [alt]="product.itemName">
+              </td>
+              <td>{{ product.itemName }}</td>
+              <td>{{ product.itemType }}</td>
+              <td>{{ product.itemPrice | currency }}</td>
+              <td class="actions-cell">
+                <button class="action-btn edit-btn" title="Edit product">
+                  <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="action-btn delete-btn"
+                        title="Delete product"
+                        (click)="confirmDeleteProduct(product)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div>
-      <label for="itemType">Type:</label>
-      <select id="itemType" required [(ngModel)]="itemDto.itemType" name="itemType">
-        <option value="Bracelet">Bracelet</option>
-        <option value="Keychain">Keychain</option>
-      </select>
-    </div>
-    <div *ngIf="itemDto.itemType === 'Bracelet'">
-      <label for="braceletSpecificAttribute">Bracelet Specific Attribute:</label>
-      <input type="text" id="braceletSpecificAttribute" [(ngModel)]="itemDto.braceletSpecificAttribute" name="braceletSpecificAttribute">
-    </div>
-    <div *ngIf="itemDto.itemType === 'Keychain'">
-      <label for="keychainSpecificAttribute">Keychain Specific Attribute:</label>
-      <input type="text" id="keychainSpecificAttribute" [(ngModel)]="itemDto.keychainSpecificAttribute" name="keychainSpecificAttribute">
-    </div>
-    <div>
-      <label for="image">Image:</label>
-      <input type="file" id="image" (change)="onFileChange($event)">
-    </div>
-    <button type="submit">Add Item</button>
-  </form>
-  <app-notification></app-notification>
+  </div>
+
+  <app-notification #notification></app-notification>
 </div>

@@ -1,14 +1,66 @@
-<header class="hero">
-  <h1>Welcome to Bracelet Empire</h1>
-  <p>Discover our unique, handmade bead bracelets crafted with love and care.</p>
-</header>
+<!-- braceletempire.client/src/app/pages/front-page/front-page.component.html -->
+<div class="front-page">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Bracelet Empire</h1>
+      <p class="hero-subtitle">Handcrafted accessories made with love</p>
+      <div class="hero-buttons">
+        <a routerLink="/products" class="btn-primary">Shop Now</a>
+        <a routerLink="/about" class="btn-secondary">Our Story</a>
+      </div>
+    </div>
+  </section>
 
-<app-featured></app-featured>
+  <!-- Featured Products Section -->
+  <section class="featured-section">
+    <div class="section-header">
+      <h2>Featured Products</h2>
+      <p>Discover our most popular handmade items</p>
+    </div>
 
-<section class="about-us-teaser">
-  <h2>About the Artist</h2>
-  <p>Learn about the young talent behind our beautiful bracelets.</p>
-  <a href="/about" class="btn-primary">Meet the Artist</a>
-</section>
+    <div *ngIf="isLoading" class="loading-spinner">
+      <div class="spinner"></div>
+    </div>
 
-<app-footer></app-footer>
+    <app-featured *ngIf="!isLoading"></app-featured>
+
+    <div class="view-all-container">
+      <a routerLink="/products" class="view-all-link">View All Products</a>
+    </div>
+  </section>
+
+  <!-- Categories Preview Section -->
+  <section class="categories-section">
+    <div class="section-header">
+      <h2>Our Collections</h2>
+      <p>Explore our handcrafted product lines</p>
+    </div>
+
+    <div class="categories-grid">
+      <div class="category-card" (click)="navigateToCategory('Bracelet')">
+        <div class="category-image bracelet-image"></div>
+        <h3>Bracelets</h3>
+        <p>Beautiful handcrafted bracelets for any occasion</p>
+      </div>
+
+      <div class="category-card" (click)="navigateToCategory('Keychain')">
+        <div class="category-image keychain-image"></div>
+        <h3>Keychains</h3>
+        <p>Unique keychains to add personality to your keys</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section">
+    <div class="about-content">
+      <h2>Meet the Artist</h2>
+      <p>
+        Behind every beautiful bracelet is an 11-year-old artist with big dreams.
+        Each piece is hand-crafted with love and attention to detail.
+      </p>
+      <a routerLink="/about" class="btn-tertiary">Learn More</a>
+    </div>
+  </section>
+</div>

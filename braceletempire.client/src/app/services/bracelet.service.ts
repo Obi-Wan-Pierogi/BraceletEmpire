@@ -16,7 +16,7 @@ export class BraceletService {
 
   getAllBracelets(): Observable<Bracelet[]> {
     this.http.get<Bracelet[]>(this.braceletsUrl).subscribe(response => {
-      console.log('API Response:', response); // Debug: Log the API response
+      console.log('API Response:', response);
       this.bracelets$.next(response);
     }, error => {
       console.error("Error fetching bracelets:", error);

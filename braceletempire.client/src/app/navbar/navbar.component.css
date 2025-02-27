@@ -1,200 +1,145 @@
-  /*Responsive Navbar */
-/*.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 5px 2px 0;
-  width: 100%;
-  box-sizing: border-box;
-  font-family: Arial, Calibri;
-  font-size: 18px;
-}
-
-.nav-item a:hover {
-  color: darkmagenta;
-}
-
-.nav {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.nav-item {
-  margin-left: 10px;
-}
-
-.navbar-brand, .nav-link {
-  text-decoration: none;
-  color: #f9f9e0;
-  border: #ff90bc;
-  background-color: #ff90bc;
-  border-radius: 5px;
-  padding: 0 2px;
-  height: 20px;
-}
-
-.nav-pills {
-  height: 23px;
-  padding-top: 2px;
-}
-
-.cart-counter {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 2px 8px;
-  margin-left: 5px;
-  font-size: 12px;
-  display: inline-block;
-  vertical-align: top;
-}*/
-
-/* Responsive design */
-/*@media (max-width: 520px) {
-  .navbar-brand {
-    display: none;*/ /* Hide navbar brand on small screens */
-  /*}
-
-  .navbar {
-    justify-content: center;*/ /* Center remaining items */
-  /*}
-}*/
-
-/*.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0;
-  width: 100%;
-  box-sizing: border-box;
-  font-family: Arial, Calibri;
-  font-size: 18px;
-  height: 80px;*/ /* Double the height */
-/*}
-
-.nav {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: nowrap;
-}
-
-.nav-item {
-  margin-left: 0;*/ /* Remove margin between nav items */
-/*}
-
-.navbar-brand, .nav-link {
-  text-decoration: none;
-  color: #f9f9e0;
-  border: 2px solid #ff5d9d;*/ /* Same color as background */
-  /*padding: 20px;*/ /* Increase padding to match new height */
-  /*height: 100%;*/ /* Full height of the navbar */
-  /*display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  background-color: #ff5d9d;
-}
-
-  .navbar-brand:hover, .nav-link:hover {
-    color: darkmagenta;
-    border-color: darkmagenta;*/ /* Change border color on hover */
-  /*}
-
-.nav-pills {
-  padding: 0;
-}
-
-.cart-counter {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 2px 8px;
-  margin-left: 5px;
-  font-size: 12px;
-  display: inline-block;
-  vertical-align: top;
-}*/
-
+/* braceletempire.client/src/app/navbar/navbar.component.css */
 .navbar {
+  background-color: var(--primary-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0;
-  width: 100%;
-  box-sizing: border-box;
-  font-family: Arial, Calibri;
-  font-size: 24px;
-  height: 80px; /* Double the height */
-  background-color: #ff5d9d; /* Background color */
+  padding: 0 20px;
+  height: 70px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.nav {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.navbar-brand {
   display: flex;
-  flex-wrap: nowrap;
-  height: 100%; /* Ensure nav takes full height */
+  align-items: center;
+  text-decoration: none;
+}
+
+.brand-name {
+  color: var(--accent-color);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 .nav-item {
-  margin-left: 0; /* Remove margin between nav items */
-}
-
-.navbar-brand, .nav-link {
-  text-decoration: none;
-  color: #f9f9e0;
-  padding: 0 20px; /* Ensure consistent padding */
-  height: 100%; /* Full height of the navbar */
+  height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  background-color: #ff5d9d;
-  border: 2px solid #ff5d9d; /* Set border color */
 }
 
-  .navbar-brand:hover, .nav-link:hover {
-    color: darkmagenta;
-    border-color: darkmagenta; /* Change border color on hover */
+.nav-link {
+  color: var(--accent-color);
+  font-size: 1.1rem;
+  padding: 0 20px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: var(--transition);
+}
+
+  .nav-link:hover, .nav-link.active {
+    color: #ffffff;
+    background-color: var(--primary-hover);
   }
 
-.nav-pills {
-  padding: 0;
-  height: 100%; /* Ensure nav pills take full height */
+.cart-link {
+  display: flex;
+  align-items: center;
+}
+
+.cart-icon {
+  position: relative;
+  margin-left: 8px;
 }
 
 .cart-counter {
-  background-color: red;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ff4757;
   color: white;
   border-radius: 50%;
-  padding: 2px 8px;
-  margin-left: 5px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 12px;
-  display: inline-block;
-  vertical-align: top;
+  font-weight: bold;
 }
 
-/* Responsive design */
-@media (max-width: 520px) {
-  .navbar {
-    justify-content: center; /* Center remaining items */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.bar {
+  height: 3px;
+  width: 100%;
+  background-color: var(--accent-color);
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
   }
 
-  .nav {
-    flex-wrap: wrap; /* Allow items to wrap */
+  .nav-links {
+    position: fixed;
+    left: -100%;
+    top: 70px;
+    flex-direction: column;
+    background-color: var(--primary-color);
+    width: 100%;
+    height: calc(100vh - 70px);
+    transition: 0.3s;
+    box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+  }
+
+    .nav-links.active {
+      left: 0;
+    }
+
+  .nav-menu {
+    flex-direction: column;
+    width: 100%;
   }
 
   .nav-item {
-    flex: 1 0 100%; /* Make nav items take full width on smaller screens */
+    width: 100%;
+    height: auto;
   }
 
-  .navbar-brand {
-    flex: 1 0 100%; /* Make navbar brand take full width on smaller screens */
+  .nav-link {
+    width: 100%;
+    height: 60px;
   }
 }

@@ -1,67 +1,137 @@
-import { Component, OnInit } from '@angular/core';
+// braceletempire.client/src/app/cart/cart.component.ts
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CartService } from '../services/cart.service';
 import { Item } from '../interfaces/item';
-import {ItemService} from '../services/item.service';
-
+import { NotificationComponent } from '../notification/notification.component';
+import { Bracelet } from '../interfaces/bracelet';
+import { Keychain } from '../interfaces/keychain';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
-  cartItems: Item[] = [];
-  modifiedCartItems: Item[] = [];  // Separate array to track modifications
-  displayedTotal: number = 0;  // Displayed total
+export class CartComponent implements OnInit, OnDestroy {
+  @ViewChild('notification') notification!: NotificationComponent;
 
-  constructor(private cartService: CartService, private itemService: ItemService) { }
+  cartItems: Item[] = [];
+
+  // Order summary variables
+  subtotal: number = 0;
+  shipping: number = 5.99; // Fixed shipping cost
+  total: number = 0;
+
+  private subscriptions: Subscription = new Subscription();
+
+  constructor(
+    private cartService: CartService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.loadCartItems();
+    this.subscriptions.add(
+      this.cartService.getCartItems().subscribe(items => {
+        this.cartItems = items;
+        this.updateOrderSummary();
+      })
+    );
   }
 
-  loadCartItems(): void {
-    this.cartService.getCartItems().subscribe(items => {
-      this.cartItems = items;
-      this.modifiedCartItems = items.map(item => ({ ...item }));  // Copy items to track modifications
-      this.displayedTotal = this.getTotal(items);  // Initialize displayed total
-    });
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
-  addToCart(item: Item): void {
-    item.quantity = item.quantity || 1;  // Ensure quantity is set to 1 if not provided
-    this.cartService.addToCart(item);
-    this.displayedTotal = this.getTotal(this.cartItems);  // Update displayed total when item is added
+  updateOrderSummary(): void {
+    this.subtotal = this.cartItems.reduce((total, item) =>
+      total + (item.itemPrice * item.quantity), 0);
+
+    // If cart is empty or subtotal is 0, set shipping to 0
+    this.shipping = this.cartItems.length > 0 ? 5.99 : 0;
+
+    this.total = this.subtotal + this.shipping;
   }
 
-  removeFromCart(itemId: number): void {
-    this.cartService.removeFromCart(itemId);
-    this.loadCartItems();
-  }
-
-  clearCart(): void {
-    this.cartService.clearCart();
-    this.loadCartItems();
-  }
-
-  updateQuantity(itemId: number, quantity: number): void {
-    const item = this.modifiedCartItems.find(item => item.itemId === itemId);
-    if (item) {
-      item.quantity = quantity;
+  incrementQuantity(item: Item): void {
+    if (item.quantity < 10) { // Set a reasonable max quantity
+      item.quantity += 1;
+      this.cartService.updateItemQuantity(item.itemId, item.quantity);
+      if (this.notification) {
+        this.notification.show('Quantity updated', 'bottom-right');
+      }
     }
   }
 
-  getTotal(items: Item[]): number {
-    return items.reduce((total, item) => total + item.itemPrice * item.quantity, 0);
+  decrementQuantity(item: Item): void {
+    if (item.quantity > 1) {
+      item.quantity -= 1;
+      this.cartService.updateItemQuantity(item.itemId, item.quantity);
+      if (this.notification) {
+        this.notification.show('Quantity updated', 'bottom-right');
+      }
+    }
   }
 
-  refreshCart(): void {
-    this.cartItems = this.modifiedCartItems.map(item => ({ ...item }));  // Copy modified items back to cartItems
-    this.displayedTotal = this.getTotal(this.cartItems);  // Update displayed total
-    this.cartService.updateCartItems(this.cartItems);  // Save changes to the service
+  updateQuantity(item: Item, event: any): void {
+    const value = parseInt(event.target.value, 10);
+
+    if (isNaN(value) || value < 1) {
+      item.quantity = 1;
+    } else if (value > 10) {
+      item.quantity = 10;
+    } else {
+      item.quantity = value;
+    }
+
+    this.cartService.updateItemQuantity(item.itemId, item.quantity);
+    if (this.notification) {
+      this.notification.show('Quantity updated', 'bottom-right');
+    }
   }
-  
-  getImageUrl(imageUrl: string): string {
-    return this.itemService.getImageUrl(imageUrl);
+
+  removeItem(itemId: number): void {
+    this.cartService.removeFromCart(itemId);
+    if (this.notification) {
+      this.notification.show('Item removed from cart', 'bottom-right');
+    }
+  }
+
+  clearCart(): void {
+    // Confirm before clearing the cart
+    if (confirm('Are you sure you want to remove all items from your cart?')) {
+      this.cartService.clearCart();
+      if (this.notification) {
+        this.notification.show('Cart cleared', 'bottom-right');
+      }
+    }
+  }
+
+  goToCheckout(): void {
+    this.router.navigate(['/checkout']);
+  }
+
+  // Type guard methods for template
+  isBracelet(item: Item): boolean {
+    return item.itemType === 'Bracelet';
+  }
+
+  isKeychain(item: Item): boolean {
+    return item.itemType === 'Keychain';
+  }
+
+  // Helper methods to safely access specific attributes
+  getBraceletAttribute(item: Item): string {
+    if (this.isBracelet(item) && 'braceletSpecificAttribute' in item) {
+      return (item as any).braceletSpecificAttribute || '';
+    }
+    return '';
+  }
+
+  getKeychainAttribute(item: Item): string {
+    if (this.isKeychain(item) && 'keychainSpecificAttribute' in item) {
+      return (item as any).keychainSpecificAttribute || '';
+    }
+    return '';
   }
 }

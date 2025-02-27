@@ -1,41 +1,299 @@
-<!--<div class="checkout-container">
-  <h2>Checkout</h2>
-  <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input id="name" formControlName="name" type="text">
-      <div *ngIf="checkoutForm.get('name').invalid && (checkoutForm.get('name').dirty || checkoutForm.get('name').touched)">
-        <small class="error">Name is required</small>
-      </div>
+<!-- braceletempire.client/src/app/checkout/checkout.component.html -->
+<div class="checkout-page">
+  <div class="checkout-container">
+    <!-- Empty cart message -->
+    <div *ngIf="cartItems.length === 0" class="empty-cart-message">
+      <h2>Your cart is empty</h2>
+      <p>Add some products to your cart before proceeding to checkout.</p>
+      <a routerLink="/products" class="btn-primary">Shop Now</a>
     </div>
-    <div class="form-group">
-      <label for="address">Address</label>
-      <input id="address" formControlName="address" type="text">
-      <div *ngIf="checkoutForm.get('address').invalid && (checkoutForm.get('address').dirty || checkoutForm.get('address').touched)">
-        <small class="error">Address is required</small>
-      </div>
-    </div>
-    <button type="submit" [disabled]="checkoutForm.invalid">Place Order</button>
-  </form>
-</div>-->
 
-<div class="checkout-container">
-  <h2>Checkout</h2>
-  <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input id="name" formControlName="name" type="text">
-      <div *ngIf="checkoutForm.get('name')!.invalid && (checkoutForm.get('name')!.dirty || checkoutForm.get('name')!.touched)">
-        <small class="error">Name is required</small>
+    <!-- Checkout form -->
+    <div *ngIf="cartItems.length > 0" class="checkout-content">
+      <h1>Checkout</h1>
+
+      <!-- Progress steps -->
+      <div class="checkout-steps">
+        <div class="step" [ngClass]="{'active': currentStep === 1, 'completed': currentStep > 1}">
+          <div class="step-number">1</div>
+          <div class="step-label">Information</div>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step" [ngClass]="{'active': currentStep === 2, 'completed': currentStep > 2}">
+          <div class="step-number">2</div>
+          <div class="step-label">Review</div>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step" [ngClass]="{'active': currentStep === 3}">
+          <div class="step-number">3</div>
+          <div class="step-label">Confirmation</div>
+        </div>
+      </div>
+
+      <div class="checkout-form-container">
+        <!-- Step 1: Information Form -->
+        <form *ngIf="currentStep === 1" [formGroup]="checkoutForm" class="checkout-form">
+          <div class="form-section">
+            <h3>Contact Information</h3>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input id="name"
+                       type="text"
+                       formControlName="name"
+                       placeholder="Your full name"
+                       [ngClass]="{'error-input': isFieldInvalid('name')}">
+                <div *ngIf="isFieldInvalid('name')" class="error-message">
+                  <span *ngIf="checkoutForm.get('name')?.errors?.['required']">Name is required</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input id="email"
+                       type="email"
+                       formControlName="email"
+                       placeholder="your.email@example.com"
+                       [ngClass]="{'error-input': isFieldInvalid('email')}">
+                <div *ngIf="isFieldInvalid('email')" class="error-message">
+                  <span *ngIf="checkoutForm.get('email')?.errors?.['required']">Email is required</span>
+                  <span *ngIf="checkoutForm.get('email')?.errors?.['email']">Enter a valid email address</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone Number (optional)</label>
+                <input id="phone"
+                       type="tel"
+                       formControlName="phone"
+                       placeholder="(123) 456-7890">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Shipping Address</h3>
+
+            <div class="form-row">
+              <div class="form-group full-width">
+                <label for="street">Street Address *</label>
+                <input id="street"
+                       type="text"
+                       formControlName="street"
+                       placeholder="123 Main St, Apt 4B"
+                       [ngClass]="{'error-input': isFieldInvalid('street')}">
+                <div *ngIf="isFieldInvalid('street')" class="error-message">
+                  <span *ngIf="checkoutForm.get('street')?.errors?.['required']">Street address is required</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City *</label>
+                <input id="city"
+                       type="text"
+                       formControlName="city"
+                       placeholder="City"
+                       [ngClass]="{'error-input': isFieldInvalid('city')}">
+                <div *ngIf="isFieldInvalid('city')" class="error-message">
+                  <span *ngIf="checkoutForm.get('city')?.errors?.['required']">City is required</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="state">State/Province *</label>
+                <input id="state"
+                       type="text"
+                       formControlName="state"
+                       placeholder="State"
+                       [ngClass]="{'error-input': isFieldInvalid('state')}">
+                <div *ngIf="isFieldInvalid('state')" class="error-message">
+                  <span *ngIf="checkoutForm.get('state')?.errors?.['required']">State is required</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="zip">ZIP/Postal Code *</label>
+                <input id="zip"
+                       type="text"
+                       formControlName="zip"
+                       placeholder="12345"
+                       [ngClass]="{'error-input': isFieldInvalid('zip')}">
+                <div *ngIf="isFieldInvalid('zip')" class="error-message">
+                  <span *ngIf="checkoutForm.get('zip')?.errors?.['required']">ZIP code is required</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Payment Method</h3>
+
+            <div class="payment-methods">
+              <div class="payment-option"
+                   [ngClass]="{'selected': checkoutForm.get('paymentMethod')?.value === 'cashApp'}"
+                   (click)="selectPaymentMethod('cashApp')">
+                <div class="payment-option-label">Cash App</div>
+              </div>
+
+              <div class="payment-option"
+                   [ngClass]="{'selected': checkoutForm.get('paymentMethod')?.value === 'paypal'}"
+                   (click)="selectPaymentMethod('paypal')">                
+                <div class="payment-option-label">PayPal</div>
+              </div>
+
+              <div class="payment-option"
+                   [ngClass]="{'selected': checkoutForm.get('paymentMethod')?.value === 'bankTransfer'}"
+                   (click)="selectPaymentMethod('bankTransfer')">
+                <div class="payment-option-label">Bank Transfer</div>
+              </div>
+            </div>
+
+            <div *ngIf="isFieldInvalid('paymentMethod')" class="error-message">
+              <span *ngIf="checkoutForm.get('paymentMethod')?.errors?.['required']">Please select a payment method</span>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <a routerLink="/cart" class="btn-secondary">Back to Cart</a>
+            <button type="button" (click)="goToReview()" class="btn-primary">Review Order</button>
+          </div>
+        </form>
+
+        <!-- Step 2: Review Order -->
+        <div *ngIf="currentStep === 2" class="review-container">
+          <div class="review-section">
+            <h3>Review Your Order</h3>
+
+            <div class="order-details">
+              <div class="order-items">
+                <div *ngFor="let item of cartItems" class="review-item">
+                  <div class="review-item-image">
+                    <img [src]="item.imageUrl" [alt]="item.itemName">
+                  </div>
+                  <div class="review-item-details">
+                    <h4>{{ item.itemName }}</h4>
+                    <p>Quantity: {{ item.quantity }}</p>
+                    <p class="review-item-price">{{ item.itemPrice * item.quantity | currency }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="order-summary">
+                <div class="summary-row">
+                  <span>Subtotal</span>
+                  <span>{{ subtotal | currency }}</span>
+                </div>
+                <div class="summary-row">
+                  <span>Shipping</span>
+                  <span>{{ shipping | currency }}</span>
+                </div>
+                <div class="summary-row total">
+                  <span>Total</span>
+                  <span>{{ total | currency }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="review-section">
+            <h3>Shipping Information</h3>
+            <div class="info-grid">
+              <div class="info-group">
+                <label>Name:</label>
+                <div>{{ checkoutForm.get('name')?.value }}</div>
+              </div>
+              <div class="info-group">
+                <label>Email:</label>
+                <div>{{ checkoutForm.get('email')?.value }}</div>
+              </div>
+              <div class="info-group">
+                <label>Phone:</label>
+                <div>{{ checkoutForm.get('phone')?.value || 'Not provided' }}</div>
+              </div>
+              <div class="info-group">
+                <label>Address:</label>
+                <div>
+                  {{ checkoutForm.get('street')?.value }}<br>
+                  {{ checkoutForm.get('city')?.value }}, {{ checkoutForm.get('state')?.value }} {{ checkoutForm.get('zip')?.value }}
+                </div>
+              </div>
+              <div class="info-group">
+                <label>Payment Method:</label>
+                <div>{{ getPaymentMethodLabel(checkoutForm.get('paymentMethod')?.value) }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" (click)="goBack()" class="btn-secondary">Back to Information</button>
+            <button type="button" (click)="placeOrder()" class="btn-primary" [disabled]="isSubmitting">
+              <span *ngIf="!isSubmitting">Place Order</span>
+              <span *ngIf="isSubmitting">Processing...</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Order Confirmation -->
+        <div *ngIf="currentStep === 3" class="confirmation-container">
+          <div class="confirmation-icon">✓</div>
+          <h2>Thank You for Your Order!</h2>
+          <p>Your order has been successfully placed.</p>
+          <p class="order-number">Order #: {{ orderId }}</p>
+
+          <div class="confirmation-details">
+            <p>A confirmation email has been sent to {{ checkoutForm.get('email')?.value }}</p>
+            <p>You'll receive payment instructions for your {{ getPaymentMethodLabel(checkoutForm.get('paymentMethod')?.value) }} payment.</p>
+          </div>
+
+          <div class="confirmation-actions">
+            <a routerLink="/products" class="btn-secondary">Continue Shopping</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="form-group">
-      <label for="address">Address</label>
-      <input id="address" formControlName="address" type="text">
-      <div *ngIf="checkoutForm.get('address')!.invalid && (checkoutForm.get('address')!.dirty || checkoutForm.get('address')!.touched)">
-        <small class="error">Address is required</small>
+  </div>
+
+  <!-- Order Summary Sidebar -->
+  <div *ngIf="cartItems.length > 0 && currentStep !== 3" class="order-summary-sidebar">
+    <div class="summary-header">
+      <h3>Order Summary</h3>
+      <span>{{ cartItems.length }} {{ cartItems.length === 1 ? 'item' : 'items' }}</span>
+    </div>
+
+    <div class="summary-items">
+      <div *ngFor="let item of cartItems" class="summary-item">
+        <div class="summary-item-image">
+          <img [src]="item.imageUrl" [alt]="item.itemName">
+          <span class="summary-item-quantity">{{ item.quantity }}</span>
+        </div>
+        <div class="summary-item-details">
+          <h4>{{ item.itemName }}</h4>
+          <p>{{ item.itemPrice | currency }} each</p>
+        </div>
+        <div class="summary-item-total">
+          {{ item.itemPrice * item.quantity | currency }}
+        </div>
       </div>
     </div>
-    <button type="submit" [disabled]="checkoutForm.invalid">Place Order</button>
-  </form>
+
+    <div class="summary-totals">
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span>{{ subtotal | currency }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Shipping</span>
+        <span>{{ shipping | currency }}</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>{{ total | currency }}</span>
+      </div>
+    </div>
+  </div>
 </div>
