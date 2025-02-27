@@ -76,7 +76,8 @@
           "defaultConfiguration": "development",
           "options": {
             "buildTarget": "braceletempire.client:build",
-            "proxyConfig": "src/proxy.conf.js"
+            "proxyConfig": "src/proxy.conf.js",
+                    "ssl": false
           }
         },
         "extract-i18n": {

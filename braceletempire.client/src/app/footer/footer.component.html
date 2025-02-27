@@ -1,9 +1,50 @@
-<div class="footer">
-  <p>Contact us at email&#64;example.com</p>
-  <div class="social-media">
-    <a href="#">Instagram</a>
-    <a href="#">Facebook</a>
-    <!-- Additional social media links -->
+<!-- braceletempire.client/src/app/footer/footer.component.html -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <h2>Bracelet Empire</h2>
+        <p>Handcrafted with love by a young entrepreneur</p>
+      </div>
+
+      <div class="footer-nav">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/products">Shop</a></li>
+          <li><a routerLink="/about">About Us</a></li>
+          <li><a routerLink="/cart">View Cart</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-categories">
+        <h3>Categories</h3>
+        <ul>
+          <li><a routerLink="/products" [queryParams]="{category: 'bracelet'}">Bracelets</a></li>
+          <li><a routerLink="/products" [queryParams]="{category: 'keychain'}">Keychains</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p>Email: braceletempire.com&#64;gmail.com</p>
+        <div class="social-media">
+          <a href="#" class="social-icon instagram" aria-label="Instagram">
+            Instagram
+          </a>
+          <a href="#" class="social-icon facebook" aria-label="Facebook">
+            Facebook
+          </a>
+          <a href="#" class="social-icon tiktok" aria-label="TikTok">
+            TikTok
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {{ currentYear }} Bracelet Empire. All rights reserved.</p>
+      <p class="made-with-love">Made with ❤️ to support young entrepreneurs</p>
+    </div>
   </div>
-  <p>&copy; 2023 Bracelet Empire. All rights reserved.</p>
-</div>
+</footer>

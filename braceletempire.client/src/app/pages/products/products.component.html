@@ -1,17 +1,96 @@
-<div class="products-container">
-  <h2>Bracelets</h2>
-  <div class="category-container" *ngIf="bracelets.length > 0; else noBracelets">
-    <div *ngFor="let item of bracelets" class="app-card">
-      <app-card [item]="item"></app-card>
-    </div>
+<!-- braceletempire.client/src/app/pages/products/products.component.html -->
+<div class="products-page">
+  <div class="page-header">
+    <h1>Our Products</h1>
+    <p>Discover our unique handcrafted accessories</p>
   </div>
-  <ng-template #noBracelets><p>No Bracelets available.</p></ng-template>
 
-  <h2>Keychains</h2>
-  <div class="category-container" *ngIf="keychains.length > 0; else noKeychains">
-    <div *ngFor="let item of keychains" class="app-card">
+  <div class="filters-container">
+    <div class="filter-group">
+      <label for="category-filter">Category:</label>
+      <select id="category-filter"
+              [(ngModel)]="selectedCategory"
+              (change)="applyFilters()">
+        <option value="all">All Products</option>
+        <option value="bracelet">Bracelets</option>
+        <option value="keychain">Keychains</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="sort-by">Sort By:</label>
+      <select id="sort-by"
+              [(ngModel)]="sortOption"
+              (change)="applyFilters()">
+        <option value="default">Default</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+        <option value="name-asc">Name: A to Z</option>
+        <option value="name-desc">Name: Z to A</option>
+      </select>
+    </div>
+
+    <div class="price-filter">
+      <label>Price Range:</label>
+      <div class="price-inputs">
+        <input type="number"
+               placeholder="Min"
+               [(ngModel)]="priceMin"
+               (change)="applyFilters()"
+               min="0">
+        <span>-</span>
+        <input type="number"
+               placeholder="Max"
+               [(ngModel)]="priceMax"
+               (change)="applyFilters()"
+               min="0">
+      </div>
+    </div>
+
+    <button class="reset-filters-btn" (click)="resetFilters()">
+      Reset Filters
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading products...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="hasError" class="error-container">
+    <p>Error loading products. Please try again later.</p>
+    <button (click)="loadProducts()">Retry</button>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && !hasError && filteredItems.length === 0" class="empty-state">
+    <p>No products match your current filters.</p>
+    <button (click)="resetFilters()">Reset Filters</button>
+  </div>
+
+  <!-- Products Grid -->
+  <div *ngIf="!isLoading && !hasError && filteredItems.length > 0" class="products-grid">
+    <div *ngFor="let item of filteredItems" class="product-card">
       <app-card [item]="item"></app-card>
     </div>
   </div>
-  <ng-template #noKeychains><p>No Keychains available.</p></ng-template>
+
+  <!-- Pagination -->
+  <div *ngIf="!isLoading && !hasError && filteredItems.length > 0" class="pagination">
+    <button [disabled]="currentPage === 1"
+            (click)="changePage(currentPage - 1)"
+            class="pagination-btn">
+      Previous
+    </button>
+
+    <span class="page-info">Page {{ currentPage }} of {{ totalPages }}</span>
+
+    <button [disabled]="currentPage === totalPages"
+            (click)="changePage(currentPage + 1)"
+            class="pagination-btn">
+      Next
+    </button>
+  </div>
 </div>

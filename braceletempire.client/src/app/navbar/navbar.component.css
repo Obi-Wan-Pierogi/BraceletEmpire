@@ -1,78 +1,145 @@
+/* braceletempire.client/src/app/navbar/navbar.component.css */
 .navbar {
+  background-color: var(--primary-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0;
-  width: 100%;
-  box-sizing: border-box;
-  font-family: Arial, Calibri;
-  font-size: 24px;
-  height: 80px; 
-  background-color: #ff5d9d;
+  padding: 0 20px;
+  height: 70px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.nav {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.navbar-brand {
   display: flex;
-  flex-wrap: nowrap;
+  align-items: center;
+  text-decoration: none;
+}
+
+.brand-name {
+  color: var(--accent-color);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
   height: 100%;
 }
 
 .nav-item {
-  margin-left: 0;
-}
-
-.navbar-brand, .nav-link {
-  text-decoration: none;
-  color: #f9f9e0;
-  padding: 0 20px;
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  background-color: #ff5d9d;
-  border: 2px solid #ff5d9d;
 }
 
-  .navbar-brand:hover, .nav-link:hover {
-    color: darkmagenta;
-    border-color: darkmagenta;
+.nav-link {
+  color: var(--accent-color);
+  font-size: 1.1rem;
+  padding: 0 20px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: var(--transition);
+}
+
+  .nav-link:hover, .nav-link.active {
+    color: #ffffff;
+    background-color: var(--primary-hover);
   }
 
-.nav-pills {
-  padding: 0;
-  height: 100%;
+.cart-link {
+  display: flex;
+  align-items: center;
+}
+
+.cart-icon {
+  position: relative;
+  margin-left: 8px;
 }
 
 .cart-counter {
-  background-color: red;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ff4757;
   color: white;
   border-radius: 50%;
-  padding: 2px 8px;
-  margin-left: 5px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 12px;
-  display: inline-block;
-  vertical-align: top;
+  font-weight: bold;
 }
 
-/* Responsive design */
-@media (max-width: 520px) {
-  .navbar {
-    justify-content: center;
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.bar {
+  height: 3px;
+  width: 100%;
+  background-color: var(--accent-color);
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
   }
 
-  .nav {
-    flex-wrap: wrap;
+  .nav-links {
+    position: fixed;
+    left: -100%;
+    top: 70px;
+    flex-direction: column;
+    background-color: var(--primary-color);
+    width: 100%;
+    height: calc(100vh - 70px);
+    transition: 0.3s;
+    box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+  }
+
+    .nav-links.active {
+      left: 0;
+    }
+
+  .nav-menu {
+    flex-direction: column;
+    width: 100%;
   }
 
   .nav-item {
-    flex: 1 0 100%;
+    width: 100%;
+    height: auto;
   }
 
-  .navbar-brand {
-    flex: 1 0 100%;
+  .nav-link {
+    width: 100%;
+    height: 60px;
   }
 }

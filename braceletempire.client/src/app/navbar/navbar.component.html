@@ -1,18 +1,33 @@
-<div class="navbar">
-  <a class="navbar-brand" href="/">Bracelet Empire</a>
-  <ul class="nav nav-pills">
-    <li class="nav-item">
-      <a class="nav-link" href="/products">Products</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/about">About Us</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/cart">
-        View Cart
-        <span *ngIf="itemCount > 0" class="cart-counter">{{ itemCount }}</span>
-      </a>
-    </li>
-  </ul>
-</div>
+<nav class="navbar">
+  <div class="navbar-container">
+    <a class="navbar-brand" routerLink="/">
+      <span class="brand-name">Bracelet Empire</span>
+    </a>
 
+    <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <div class="nav-links" [class.active]="menuActive">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/products" routerLinkActive="active" (click)="closeMenu()">Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about" routerLinkActive="active" (click)="closeMenu()">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link cart-link" routerLink="/cart" routerLinkActive="active" (click)="closeMenu()">
+            <span class="cart-text">Cart</span>
+            <span class="cart-icon">
+              <i class="fa fa-shopping-cart"></i>
+              <span *ngIf="itemCount > 0" class="cart-counter">{{ itemCount }}</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

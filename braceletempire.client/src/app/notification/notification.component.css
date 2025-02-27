@@ -1,43 +1,202 @@
+/* braceletempire.client/src/app/notification/notification.component.css */
 .notification {
   position: fixed;
-  background-color: #40acbc;
-  color: white;
+  display: flex;
+  align-items: center;
   padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  width: auto;
-  max-width: 300px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
+  min-width: 280px;
+  max-width: 350px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+  animation: slideIn 0.3s ease-out forwards;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+  /* Position variants */
+  .notification.top-right {
+    top: 20px;
+    right: 20px;
+  }
 
-.notification.top-right {
-  top: 25px;
-  right: 15px;
+  .notification.top-center {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+  }
+
+  .notification.top-left {
+    top: 20px;
+    left: 20px;
+  }
+
+  .notification.bottom-right {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .notification.bottom-left {
+    bottom: 20px;
+    left: 20px;
+  }
+
+  .notification.bottom-center {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+  }
+
+  /* Type variants */
+  .notification.success {
+    background-color: #e7f7ed;
+    border-left: 4px solid #34c759;
+    color: #1d7338;
+  }
+
+  .notification.error {
+    background-color: #feecee;
+    border-left: 4px solid #ff3b30;
+    color: #bc1c20;
+  }
+
+  .notification.warning {
+    background-color: #fff9e6;
+    border-left: 4px solid #ffcc00;
+    color: #a36200;
+  }
+
+  .notification.info {
+    background-color: #e6f3ff;
+    border-left: 4px solid #007aff;
+    color: #0055b3;
+  }
+
+/* Icon styling */
+.notification-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
 }
 
-.notification.top-center{
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+.success .notification-icon {
+  background-color: #34c759;
+  color: white;
 }
 
-.notification.top-left {
-  top: 20px;
-  left: 20px;
+.error .notification-icon {
+  background-color: #ff3b30;
+  color: white;
 }
 
-.notification.bottom-right {
-  bottom: 20px;
-  right: 20px;
+.warning .notification-icon {
+  background-color: #ffcc00;
+  color: white;
 }
 
-.notification.bottom-left {
-  bottom: 20px;
-  left: 20px;
+.info .notification-icon {
+  background-color: #007aff;
+  color: white;
+  font-style: italic;
+}
+
+/* Content styling */
+.notification-content {
+  flex: 1;
+  font-size: 0.95rem;
+}
+
+/* Close button */
+.notification-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  font-size: 1.2rem;
+  padding: 0;
+  margin-left: 12px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+  .notification-close:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+/* Animation */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Specific animations for center-positioned notifications */
+.top-center {
+  animation: slideInCenter 0.3s ease-out forwards;
+}
+
+.bottom-center {
+  animation: slideInCenter 0.3s ease-out forwards;
+}
+
+@keyframes slideInCenter {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .notification {
+    min-width: auto;
+    max-width: calc(100% - 40px);
+    width: calc(100% - 40px);
+  }
+
+    .notification.top-center,
+    .notification.bottom-center {
+      left: 20px;
+      right: 20px;
+      width: calc(100% - 40px);
+      transform: none;
+    }
+
+  @keyframes slideInCenter {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
