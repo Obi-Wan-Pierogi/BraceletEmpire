@@ -33,7 +33,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.route.params.subscribe(params => {
-        const itemId = +params['id']; // Convert to number
+        const itemId = +params['id']; 
         if (itemId) {
           this.loadItem(itemId);
         } else {
@@ -124,7 +124,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   }
 
   isNewProduct(item: Item): boolean {
-    // Placeholder logic - in real implementation, check based on created date
+    // Placeholder logic
     return item.itemId % 3 === 0; // Shows "New" badge on every third item
   }
 }

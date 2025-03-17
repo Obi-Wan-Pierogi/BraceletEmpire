@@ -1,4 +1,3 @@
-// braceletempire.client/src/app/navbar/navbar.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { Subscription } from 'rxjs';

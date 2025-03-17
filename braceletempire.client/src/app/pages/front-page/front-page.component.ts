@@ -1,4 +1,3 @@
-// braceletempire.client/src/app/pages/front-page/front-page.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -16,7 +15,7 @@ export class FrontPageComponent implements OnInit {
     // Simulate loading time for featured products
     setTimeout(() => {
       this.isLoading = false;
-    }, 800);
+    }, 300);
   }
 
   navigateToCategory(category: string): void {

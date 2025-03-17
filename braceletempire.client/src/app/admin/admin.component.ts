@@ -1,4 +1,3 @@
-// braceletempire.client/src/app/admin/admin.component.ts
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ItemService } from '../services/item.service';
@@ -77,7 +76,7 @@ export class AdminComponent implements OnInit {
   isFieldInvalid(fieldName: string): boolean {
     this.isSubmitted = true;
 
-    // Simple validation - just check if empty for required fields
+    // Check if empty for required fields
     switch (fieldName) {
       case 'itemName':
         return !this.itemDto.itemName;

@@ -1,4 +1,3 @@
-// braceletempire.client/src/app/card/card.component.ts
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Item } from '../interfaces/item';
 import { Bracelet } from '../interfaces/bracelet';
@@ -50,8 +49,7 @@ export class CardComponent implements OnInit {
   }
 
   isNewProduct(item: Item): boolean {
-    // This is a placeholder logic - in real implementation,
-    // you might want to check based on created date or a flag in the database
+    // This is a placeholder logic 
     return item.itemId % 3 === 0; // Just for demo, shows "New" badge on every third item
   }
 }

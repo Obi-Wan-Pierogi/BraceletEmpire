@@ -1,4 +1,3 @@
-// braceletempire.client/src/app/pages/products/products.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -115,7 +114,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
         result.sort((a, b) => b.itemName.localeCompare(a.itemName));
         break;
       default:
-        // Default sorting (could be by ID or featured status)
         break;
     }
 

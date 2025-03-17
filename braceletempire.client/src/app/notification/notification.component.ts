@@ -1,4 +1,3 @@
-// braceletempire.client/src/app/notification/notification.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -23,7 +22,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit(): void {
-    // Use Subject to debounce rapid notifications
     this.subscription = this.notificationSubject
       .pipe(debounceTime(300)) // Prevent showing multiple notifications in quick succession
       .subscribe(() => {

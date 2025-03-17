@@ -87,10 +87,8 @@ export class ItemService {
       formData.append('image', image);
     }
 
-    // IMPORTANT: Do NOT set content-type header - let the browser set it with the boundary
+    
     return this.http.put(`${this.itemsUrl}/${id}`, formData, {
-      // No headers explicitly set for multipart/form-data
-      // Angular/browser will set the correct Content-Type with boundary
       observe: 'response' // Get full response to handle status codes properly
     }).pipe(
       tap(() => this.loadItems()) // Refresh the items list after updating
@@ -112,6 +110,7 @@ export class ItemService {
     if (imageUrl.startsWith('/uploads/')) {
       // Image is stored on the server
       return `https://localhost:7218${imageUrl}`;
+      // Imgae is a direct link
     } else if (imageUrl.startsWith('http')) {
       return imageUrl;
     } else {
