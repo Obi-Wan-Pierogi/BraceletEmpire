@@ -99,7 +99,13 @@
   border-radius: 4px;
   overflow: hidden;
   flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
+
+  .product-image:hover {
+    transform: scale(1.05);
+  }
 
   .product-image img {
     width: 100%;
@@ -116,6 +122,16 @@
     margin: 0 0 5px;
     font-size: 1.1rem;
     color: var(--dark-text);
+  }
+
+.product-name {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+  .product-name:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
   }
 
 .product-description {

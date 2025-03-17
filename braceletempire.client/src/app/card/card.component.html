@@ -1,12 +1,11 @@
-<!-- braceletempire.client/src/app/card/card.component.html -->
 <div class="card" [ngClass]="{'fade-in': true}">
-  <div class="card-image-container">
+  <div class="card-image-container" [routerLink]="['/products', item.itemId]">
     <img [src]="item.imageUrl" class="card-img" alt="{{ item.itemName }}" loading="lazy" />
     <div class="card-badge" *ngIf="isNewProduct(item)">New</div>
   </div>
 
   <div class="card-body">
-    <h3 class="card-name">{{ item.itemName }}</h3>
+    <h3 class="card-name" [routerLink]="['/products', item.itemId]">{{ item.itemName }}</h3>
 
     <p class="card-text">{{ item.itemDescription }}</p>
 
@@ -21,10 +20,13 @@
 
     <div class="card-footer">
       <h4 class="card-price">{{ item.itemPrice | currency }}</h4>
-      <button class="add-to-cart-btn" (click)="addToCart()" [disabled]="isAddingToCart">
-        <span *ngIf="!isAddingToCart">Add to Cart</span>
-        <span *ngIf="isAddingToCart">Adding...</span>
-      </button>
+      <div class="card-actions">
+        <button class="view-details-btn" [routerLink]="['/products', item.itemId]">View Details</button>
+        <button class="add-to-cart-btn" (click)="addToCart()" [disabled]="isAddingToCart">
+          <span *ngIf="!isAddingToCart">Add to Cart</span>
+          <span *ngIf="isAddingToCart">Adding...</span>
+        </button>
+      </div>
     </div>
   </div>
 

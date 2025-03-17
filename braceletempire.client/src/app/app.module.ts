@@ -18,6 +18,7 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NotificationComponent } from './notification/notification.component';
 import { AdminComponent } from './admin/admin.component';
+import { ItemDetailComponent } from './item-detail/item-detail.component';
 
 
 
@@ -37,6 +38,7 @@ import { AdminComponent } from './admin/admin.component';
     ConfirmationComponent,
     NotificationComponent,
     AdminComponent,
+    ItemDetailComponent,
     
   ],
   imports: [

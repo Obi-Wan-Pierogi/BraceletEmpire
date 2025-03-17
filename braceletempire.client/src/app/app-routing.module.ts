@@ -8,11 +8,13 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { AdminComponent } from './admin/admin.component';
+import { ItemDetailComponent } from './item-detail/item-detail.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/front-page', pathMatch: 'full' },
   { path: 'products', component: ProductsComponent },
+  { path: 'products/:id', component: ItemDetailComponent },
   { path: 'front-page', component: FrontPageComponent },
   { path: 'about', component: AboutUsComponent },
   { path: 'cart', component: CartComponent },

@@ -32,7 +32,7 @@
             <img [src]="item.imageUrl" [alt]="item.itemName">
           </div>
           <div class="product-details">
-            <h3>{{ item.itemName }}</h3>
+            <h3 [routerLink]="['/products', item.itemId]" class="product-name">{{ item.itemName }}</h3>
             <p class="product-description">{{ item.itemDescription }}</p>
             <p *ngIf="isBracelet(item)" class="product-attribute">
               <span>Material:</span> {{ getBraceletAttribute(item) }}

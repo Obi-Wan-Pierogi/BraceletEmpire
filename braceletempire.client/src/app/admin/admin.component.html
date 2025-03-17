@@ -9,7 +9,7 @@
     <div class="admin-tabs">
       <button [ngClass]="{'active': activeTab === 'add'}"
               (click)="setActiveTab('add')">
-        Add Product
+        {{ isEditing ? 'Edit Product' : 'Add Product' }}
       </button>
       <button [ngClass]="{'active': activeTab === 'manage'}"
               (click)="setActiveTab('manage')">
@@ -17,11 +17,11 @@
       </button>
     </div>
 
-    <!-- Add Product Form -->
+    <!-- Add/Edit Product Form -->
     <div *ngIf="activeTab === 'add'" class="add-product-container">
       <form (ngSubmit)="onSubmit()" #itemForm="ngForm" class="product-form">
         <div class="form-section">
-          <h3>Product Information</h3>
+          <h3>{{ isEditing ? 'Edit Product Information' : 'Product Information' }}</h3>
 
           <div class="form-row">
             <div class="form-group">
@@ -78,13 +78,17 @@
                       [(ngModel)]="itemDto.itemType"
                       name="itemType"
                       required
-                      [ngClass]="{'error-input': isFieldInvalid('itemType')}">
+                      [ngClass]="{'error-input': isFieldInvalid('itemType')}"
+                      [disabled]="isEditing">
                 <option value="" disabled selected>Select product type</option>
                 <option value="Bracelet">Bracelet</option>
                 <option value="Keychain">Keychain</option>
               </select>
               <div *ngIf="isFieldInvalid('itemType')" class="error-message">
                 Product type is required
+              </div>
+              <div *ngIf="isEditing" class="info-message">
+                Product type cannot be changed
               </div>
             </div>
           </div>
@@ -113,11 +117,11 @@
         </div>
 
         <div class="form-section">
-          <h3>Product Image</h3>
+          <h3>Product Image {{ isEditing ? '(Optional for edit)' : '*' }}</h3>
 
           <div class="form-row">
             <div class="form-group full-width">
-              <label for="image">Product Image *</label>
+              <label for="image">{{ isEditing ? 'Update Product Image' : 'Product Image *' }}</label>
               <div class="file-upload">
                 <input type="file"
                        id="image"
@@ -138,18 +142,25 @@
                   Browse
                 </button>
               </div>
-              <div *ngIf="isSubmitted && !selectedFile" class="error-message">
+              <div *ngIf="isSubmitted && !selectedFile && !isEditing" class="error-message">
                 Product image is required
+              </div>
+              <div *ngIf="isEditing && !selectedFile" class="info-message">
+                Keep existing image (upload a new image to replace)
               </div>
             </div>
           </div>
         </div>
 
         <div class="form-actions">
-          <button type="button" (click)="resetForm()" class="btn-secondary">Reset</button>
+          <button type="button" (click)="resetForm()" class="btn-secondary">
+            {{ isEditing ? 'Cancel' : 'Reset' }}
+          </button>
           <button type="submit" class="btn-primary" [disabled]="isSubmitting">
-            <span *ngIf="!isSubmitting">Add Product</span>
-            <span *ngIf="isSubmitting">Adding...</span>
+            <span *ngIf="!isSubmitting && !isEditing">Add Product</span>
+            <span *ngIf="!isSubmitting && isEditing">Update Product</span>
+            <span *ngIf="isSubmitting && !isEditing">Adding...</span>
+            <span *ngIf="isSubmitting && isEditing">Updating...</span>
           </button>
         </div>
       </form>
@@ -187,12 +198,15 @@
               <td>{{ product.itemType }}</td>
               <td>{{ product.itemPrice | currency }}</td>
               <td class="actions-cell">
-                <button class="action-btn edit-btn" title="Edit product">
+                <button class="action-btn edit-btn"
+                        title="Edit product"
+                        (click)="editItem(product)">
                   <i class="fas fa-pencil-alt"></i>
                 </button>
                 <button class="action-btn delete-btn"
                         title="Delete product"
-                        (click)="confirmDeleteProduct(product)">
+                        (click)="confirmDeleteProduct(product)"
+                        [disabled]="isDeleting">
                   <i class="fas fa-trash-alt"></i>
                 </button>
               </td>

@@ -1,0 +1,81 @@
+<!-- Loading State -->
+<div *ngIf="isLoading" class="loading-container">
+  <div class="spinner"></div>
+  <p>Loading item details...</p>
+</div>
+
+<!-- Error State -->
+<div *ngIf="hasError" class="error-container">
+  <h2>Item Not Found</h2>
+  <p>We couldn't find the item you're looking for.</p>
+  <button (click)="navigateBack()" class="btn-secondary">Go Back</button>
+  <a routerLink="/products" class="btn-primary">Browse Products</a>
+</div>
+
+<!-- Item Detail Content -->
+<div *ngIf="item && !isLoading && !hasError" class="item-detail-container">
+  <div class="breadcrumb">
+    <a routerLink="/products">Products</a> /
+    <a *ngIf="isBracelet(item)" [routerLink]="['/products']" [queryParams]="{category: 'bracelet'}">Bracelets</a>
+    <a *ngIf="isKeychain(item)" [routerLink]="['/products']" [queryParams]="{category: 'keychain'}">Keychains</a>
+    / <span>{{ item.itemName }}</span>
+  </div>
+
+  <div class="item-detail-content">
+    <div class="item-image-container">
+      <img [src]="item.imageUrl" [alt]="item.itemName" class="item-image">
+      <div *ngIf="isNewProduct(item)" class="item-badge">New</div>
+    </div>
+
+    <div class="item-info">
+      <h1 class="item-name">{{ item.itemName }}</h1>
+
+      <div class="item-price">{{ item.itemPrice | currency }}</div>
+
+      <div class="item-description">
+        <p>{{ item.itemDescription }}</p>
+      </div>
+
+      <div *ngIf="getSpecificAttribute(item)" class="item-attributes">
+        <div class="attribute">
+          <span class="attribute-label">Material:</span>
+          <span class="attribute-value">{{ getSpecificAttribute(item) }}</span>
+        </div>
+      </div>
+
+      <div class="item-actions">
+        <div class="quantity-selector">
+          <button class="quantity-btn"
+                  (click)="decrementQuantity()"
+                  [disabled]="quantity <= 1"
+                  aria-label="Decrease quantity">
+            −
+          </button>
+
+          <span class="quantity-value">{{ quantity }}</span>
+
+          <button class="quantity-btn"
+                  (click)="incrementQuantity()"
+                  [disabled]="quantity >= 10"
+                  aria-label="Increase quantity">
+            +
+          </button>
+        </div>
+
+        <button class="add-to-cart-btn"
+                (click)="addToCart()"
+                [disabled]="isAddingToCart">
+          <span *ngIf="!isAddingToCart">Add to Cart</span>
+          <span *ngIf="isAddingToCart">Adding...</span>
+        </button>
+      </div>
+
+      <div class="back-link">
+        <button (click)="navigateBack()" class="btn-tertiary">← Back to Products</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notification component -->
+<app-notification #notification></app-notification>

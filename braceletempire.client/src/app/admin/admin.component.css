@@ -40,6 +40,7 @@
     cursor: pointer;
     font-weight: 500;
     transition: all 0.3s ease;
+    color: #333; /* Darker text color for better visibility */
   }
 
     .admin-tabs button.active {
@@ -113,6 +114,12 @@
 
 .error-message {
   color: #f44336;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+.info-message {
+  color: #2196F3;
   font-size: 0.85rem;
   margin-top: 5px;
 }
@@ -267,6 +274,9 @@
   cursor: pointer;
   margin: 0 5px;
   transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .edit-btn {
@@ -280,43 +290,3 @@
 
 .delete-btn {
   background-color: #f44336;
-  color: white;
-}
-
-  .delete-btn:hover {
-    background-color: #d32f2f;
-  }
-
-/* Loading and Empty States */
-.loading-container, .empty-state {
-  padding: 40px;
-  text-align: center;
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(255, 144, 188, 0.3);
-  border-radius: 50%;
-  border-top-color: #FF90BC;
-  animation: spin 1s ease-in-out infinite;
-  margin: 0 auto 20px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .form-row {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .actions-cell {
-    width: 70px;
-  }
-}

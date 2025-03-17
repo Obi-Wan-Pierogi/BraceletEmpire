@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BraceletEmpire.Server.Data;
-using BraceletEmpire.Server.Models;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -63,14 +62,61 @@ namespace BraceletEmpire.Server.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutItem(int id, Item item)
+        public async Task<IActionResult> PutItem(int id, [FromForm] CreateItemDto itemDto, [FromForm] IFormFile? image = null)
         {
-            if (id != item.ItemId)
+            // Get the existing item
+            var item = await _context.Items.FindAsync(id);
+            if (item == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(item).State = EntityState.Modified;
+            // Update basic item properties
+            item.ItemName = itemDto.ItemName;
+            item.ItemDescription = itemDto.ItemDescription;
+            item.ItemPrice = itemDto.ItemPrice;
+
+            // Update specific attributes based on item type
+            if (item is Bracelet bracelet && itemDto.ItemType == "Bracelet")
+            {
+                bracelet.BraceletSpecificAttribute = itemDto.BraceletSpecificAttribute ?? bracelet.BraceletSpecificAttribute;
+            }
+            else if (item is Keychain keychain && itemDto.ItemType == "Keychain")
+            {
+                keychain.KeychainSpecificAttribute = itemDto.KeychainSpecificAttribute ?? keychain.KeychainSpecificAttribute;
+            }
+
+            // Handle image update if provided
+            if (image != null && image.Length > 0)
+            {
+                // Delete old image file if it exists
+                if (!string.IsNullOrEmpty(item.ImageUrl))
+                {
+                    var oldImagePath = Path.Combine(_env.WebRootPath, item.ImageUrl.TrimStart('/'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                // Save the new image
+                var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                var uniqueFileName = $"{Guid.NewGuid()}_{image.FileName}";
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream);
+                }
+
+                // Update image URL
+                item.ImageUrl = $"/uploads/{uniqueFileName}";
+            }
 
             try
             {
